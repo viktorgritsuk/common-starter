@@ -22,7 +22,7 @@
         <swagger.annotation.jakarta>2.2.22</swagger.annotation.jakarta>
         <apache.commons.codec>1.18.0</apache.commons.codec>
         <open.api.starter.webmvc>2.6.0</open.api.starter.webmvc>
-        <wiremock>3.12.0</wiremock>
+        <wiremock>3.9.1</wiremock>
         <guava>33.2.1-jre</guava>
         <wiremock.test.containers>1.0-alpha-14</wiremock.test.containers>
         <cxf.xjc.runtime>4.0.1</cxf.xjc.runtime>
@@ -33,12 +33,10 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -46,7 +44,6 @@
             <artifactId>annotations</artifactId>
             <version>${annotations}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.apache.cxf.xjc-utils</groupId>
@@ -70,6 +67,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <version>${spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
         </dependency>
 
         <dependency>
@@ -118,12 +121,6 @@
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
             <version>${jakarta.validation.api}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>${logback.encovder}</version>
         </dependency>
 
         <dependency>
@@ -192,6 +189,12 @@
             <artifactId>junit-platform-launcher</artifactId>
             <version>${junit.platform.launcher}</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -233,6 +236,8 @@
                             <version>${junit.platform.launcher}</version>
                         </path>
                     </annotationProcessorPaths>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
