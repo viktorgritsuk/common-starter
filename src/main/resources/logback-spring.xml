@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration scan="true" scanPeriod="1 minute">
+
+    <!-- Stop output INFO at start -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
+    <!--
+        Logging configuration.
+
+        parameters (environment variables, system properties):
+        - LOGGING_DIR - directory for local log files (default: ./logs)
+    -->
+
+    <property name="logDir" value="${LOGGING_DIR:-./logs}"/>
+    <property name="logArchiveDir" value="${logDir}/archive"/>
+    <property name="logFilePrefix" value="com.bae.ii.service"/>
+    <property name="logArchiveFileSuffix" value="%d{yyyy-MM-dd}.%i.log.zip"/>
+    <property name="maxArchiveFilesCount" value="10"/>
+    <property name="maxLogFilesSize" value="100MB"/>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{MM-dd-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{5}.%M [traceId: %X{traceId:-}] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDir}/${logFilePrefix}.log</file>
+
+        <encoder>
+            <charset>utf-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{requestId:-}|%X{userId:-}] %-5level %logger{36}
+                %C{0}.%M\(...\) \(%F:%L\) - %msg%n
+            </pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logArchiveDir}/${logFilePrefix}.${logArchiveFileSuffix}</fileNamePattern>
+            <maxFileSize>${maxLogFilesSize}</maxFileSize>
+            <maxHistory>${maxArchiveFilesCount}</maxHistory>
+        </rollingPolicy>
+
+    </appender>
+
+    <!-- HTTP request logging -->
+
+    <logger name="org.springframework.ws.client.MessageTracing.received" level="TRACE"/>
+    <logger name="org.springframework.ws.client.MessageTracing.sent" level="TRACE"/>
+
+    <!--
+        <logger name="org.apache.http.headers" level="TRACE"/>
+        <logger name="org.apache.http.wire" level="WARN"/>
+    -->
+    <!-- change level to TRACE to log SQL statements -->
+    <!--
+        <logger name="org.hibernate.SQL" level="TRACE"/>
+        <logger name="org.hibernate.type" level="TRACE"/>
+    -->
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="org.springframework.security" level="INFO"/>
+    <logger name="com.bae.ii.util.RequestLoggingFilter" level="DEBUG"/>
+
+    <if condition='isDefined("ENV")'>
+        <then>
+            <appender name="jsonEncoder" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                    <customFields>
+                        {"label":"ii-project", "service_name": "ii-switch-sys"}
+                    </customFields>
+                </encoder>
+            </appender>
+
+            <root>
+                <appender-ref ref="jsonEncoder"/>
+            </root>
+        </then>
+        <else>
+            <root>
+                <appender-ref ref="stdout"/>
+                <appender-ref ref="file"/>
+            </root>
+        </else>
+    </if>
+
+</configuration>
