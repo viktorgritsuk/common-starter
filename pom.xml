@@ -174,7 +174,6 @@
             <artifactId>micrometer-tracing-bridge-otel</artifactId>
             <version>${micrometr.tracing}</version>
         </dependency>
-
         <!--Other dependencies-->
         <dependency>
             <groupId>org.jetbrains</groupId>
