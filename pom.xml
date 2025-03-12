@@ -72,6 +72,14 @@
             <version>${open.api.starter.webmvc}</version>
         </dependency>
 
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>8.0</version>
+        </dependency>
+
+
+
         <!--Jackson and Jakarta dependencies-->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -91,13 +99,14 @@
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-            <version>${jakarta.annotation.api}</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
-            <version>${jakarta.validation.api}</version>
+            <version>3.1.1</version>
         </dependency>
+
 
         <!--Test dependencies-->
         <dependency>
@@ -180,9 +189,21 @@
             <artifactId>annotations</artifactId>
             <version>${annotations}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+        </dependency>
+
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -220,6 +241,11 @@
                             <artifactId>spring-boot-autoconfigure</artifactId>
                             <version>${spring.boot.version}</version>
                         </path>
+                        <dependency>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.36</version>
+                        </dependency>
                     </annotationProcessorPaths>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
