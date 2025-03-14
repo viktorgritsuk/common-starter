@@ -1,0 +1,82 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  mvc:
+    async:
+      request-timeout: ${REQUEST_TIMEOUT}
+  messages:
+    basename: validation
+
+server:
+  port: ${SERVER_PORT}
+  servlet:
+    encoding:
+      charset: UTF-8
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+
+management:
+  health:
+    readinessState:
+      enabled: true
+    livenessState:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - metrics
+          - health
+          - info
+          - env
+          - prometheus
+          - readiness
+          - liveness
+      base-path: /metrics
+    enabled-by-default: true
+  endpoint:
+    health:
+      status:
+        http-mapping:
+          out-of-service: 503
+          down: 503
+          fatal: 503
+          up: 200
+      environmentVariablesHealthIndicator:
+        enabled: true
+      probes:
+        add-additional-paths: true
+        enabled: true
+      show-details: always
+      show-components: always
+      validate-group-membership: true
+      group:
+        readiness:
+          include:
+            - environmentVariables
+            - readinessState
+        liveness:
+          include:
+            - livenessState
+  tracing:
+    sampling:
+      probability: 1.0
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          actuate:
+            health:
+              HealthEndpointSupport: DEBUG
+    root: ${LOGGING_LEVEL}
