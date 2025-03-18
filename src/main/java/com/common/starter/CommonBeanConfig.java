@@ -9,8 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
-import com.common.starter.handler.RequestIdFilter;
-import com.common.starter.handler.RequestLoggingFilter;
+import com.common.starter.logging.RequestIdFilter;
+import com.common.starter.logging.RequestLoggingFilter;
 import com.common.starter.util.XmlConversionUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
