@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.common.starter.conversion.RequestValidationErrorConverter;
 import com.common.starter.exception.application.ApplicationException;
+import com.common.starter.exception.external.client.ClientExternalErrorException;
 import com.common.starter.model.domain.CommonError;
 import com.common.starter.model.enums.ErrorCode;
 
@@ -61,6 +62,25 @@ public final class ExceptionHandlerUtils {
             .code(ErrorCode.INTERNAL_SERVER.getCode())
             .message(ErrorCode.INTERNAL_SERVER.getMessage())
             .build());
+    }
+
+    /**
+     * Returns refactored list of error from client external error exception. Adds prefix to
+     * error message recording external system.
+     * @param exc client external error exception
+     * @return list of errors
+     */
+    public List<CommonError> getClientErrors(final ClientExternalErrorException exc) {
+        return exc.getErrors().stream()
+            .map(error -> CommonError.builder()
+                .code(error.code())
+                .message(addPrefixToErrorMessage(exc.getExternalSystem().getSystemName(), error.message()))
+                .build())
+            .toList();
+    }
+
+    private String addPrefixToErrorMessage(final String prefix, String message) {
+        return prefix + ": " + message;
     }
 
 }

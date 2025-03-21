@@ -1,5 +1,7 @@
 package com.common.starter.handler;
 
+import java.util.List;
+
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.common.starter.exception.external.ExternalErrorException;
-import com.common.starter.exception.external.FCUBSException;
+import com.common.starter.exception.external.client.ClientExternalErrorException;
 import com.common.starter.model.domain.CommonError;
 import com.common.starter.model.response.ErrorResponse;
 import com.common.starter.util.CommonResponseBuilder;
@@ -63,30 +65,15 @@ public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ExternalErrorException.class)
     public final ResponseEntity<ErrorResponse> handleExternalErrorException(ExternalErrorException exception) {
         log.error(exception.getMessage(), exception);
-        return ResponseEntity
-            .status(exception.getStatus())
-            .body(commonResponseBuilder.generateErrorResponse(exception.getErrors()));
-    }
 
-    /**
-     * This method handles an FCUBSException by generating a customized error response.
-     *
-     * @param exception The FCUBSException that is being handled.
-     * @return A ResponseEntity object with status code 409 (Conflict) and a body containing the customized error response.
-     * @throws IllegalArgumentException if the exception parameter is null.
-     */
-    @ExceptionHandler(FCUBSException.class)
-    public final ResponseEntity<ErrorResponse> handleFCUBSException(FCUBSException exception) {
-        log.error(exception.getMessage(), exception);
+        List<CommonError> errorList = switch (exception) {
+            case ClientExternalErrorException e -> exceptionHandlerUtils.getClientErrors(e);
+            default -> exception.getErrors();
+        };
+
         return ResponseEntity
             .status(exception.getStatus())
-            .body(commonResponseBuilder.generateErrorResponse(exception.getErrors().stream()
-                .map(error -> CommonError.builder()
-                    .code(error.code())
-                    .message("Core Error: " + error.message())
-                    .build())
-                .toList())
-            );
+            .body(commonResponseBuilder.generateErrorResponse(errorList));
     }
 
     /**
