@@ -3,16 +3,12 @@ package com.common.starter.model.domain;
 import java.io.Serializable;
 import java.util.StringJoiner;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
 import lombok.Builder;
 
 /**
  * Represents error.
  */
 @Builder
-@JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 public record CommonError(
 
     String code,

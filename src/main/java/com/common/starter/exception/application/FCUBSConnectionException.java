@@ -2,6 +2,7 @@ package com.common.starter.exception.application;
 
 
 import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
 
 /**
  * Represents an exception that occurs when there is a connection issue to the FCUBS system.
@@ -15,6 +16,6 @@ public class FCUBSConnectionException extends ApplicationException {
      */
     @Override
     public ErrorCode getErrorCode() {
-        return ErrorCode.FCUBS_CONNECTION_EXCEPTION;
+        return ErrorCodeEnum.FLEX_CUBE_CONNECTION_EXCEPTION;
     }
 }

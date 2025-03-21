@@ -19,8 +19,8 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import com.common.starter.conversion.RequestDeserializationFieldErrorConverter;
 import com.common.starter.conversion.RequestMethodTypeMismatchErrorConverter;
 import com.common.starter.conversion.RequestValidationErrorConverter;
-import com.common.starter.model.domain.CommonError;
-import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
+import com.common.starter.model.response.CommonErrorResponse;
 import com.common.starter.model.response.ErrorResponse;
 import com.common.starter.util.CommonResponseBuilder;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
@@ -59,8 +59,8 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
         log.error("Internal com.bae.ii.exception in the request: {}", ex.getMessage(), ex);
 
         ErrorResponse errorResponse = commonResponseBuilder.generateErrorResponse(List.of(
-            CommonError.builder()
-                .code(ErrorCode.INVALID_REQUEST_EXCEPTION.getCode())
+            CommonErrorResponse.builder()
+                .code(ErrorCodeEnum.INVALID_REQUEST_EXCEPTION.getCode())
                 .message(ex.getMessage())
                 .build()
         ));
@@ -72,7 +72,7 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         log.error("Method argument com.bae.ii.exception in the request: {}", ex.getMessage(), ex);
 
-        List<CommonError> errors = ex.getBindingResult().getAllErrors().stream()
+        List<CommonErrorResponse> errors = ex.getBindingResult().getAllErrors().stream()
             .map(validationErrorConverter::convert)
             .toList();
 
@@ -84,8 +84,8 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
         log.error("Exception in the request: {}", ex.getMessage(), ex);
 
         ErrorResponse errorResponse = commonResponseBuilder.generateErrorResponse(List.of(
-            CommonError.builder()
-                .code(ErrorCode.INVALID_REQUEST_EXCEPTION.getCode())
+            CommonErrorResponse.builder()
+                .code(ErrorCodeEnum.INVALID_REQUEST_EXCEPTION.getCode())
                 .message(ex.getMessage())
                 .build()
         ));
@@ -97,14 +97,14 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         log.error("Http message not readable com.bae.ii.exception in the request: {}", ex.getMessage(), ex);
 
-        CommonError error;
+        CommonErrorResponse error;
 
         if (ex.getCause() instanceof MismatchedInputException mismatchedInputException) {
             error = deserializationFieldErrorConverter.convert(mismatchedInputException);
         }
         else {
-            error = CommonError.builder()
-                .code(ErrorCode.INVALID_REQUEST_EXCEPTION.getCode())
+            error = CommonErrorResponse.builder()
+                .code(ErrorCodeEnum.INVALID_REQUEST_EXCEPTION.getCode())
                 .message(ex.getMessage())
                 .build();
         }
@@ -121,7 +121,7 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
         ResponseEntity<Object> responseEntity;
 
         if (ex instanceof MethodArgumentTypeMismatchException methodArgumentTypeMismatchException) {
-            CommonError error = methodTypeMismatchErrorConverter.convert(methodArgumentTypeMismatchException);
+            CommonErrorResponse error = methodTypeMismatchErrorConverter.convert(methodArgumentTypeMismatchException);
             ErrorResponse errorResponse = commonResponseBuilder.generateErrorResponse(List.of(error));
 
             responseEntity = ResponseEntity.badRequest().body(errorResponse);

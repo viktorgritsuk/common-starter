@@ -2,6 +2,7 @@ package com.common.starter.exception.application;
 
 
 import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
 
 /**
  * Exception thrown when an invalid request is made.
@@ -21,11 +22,11 @@ public class InvalidRequestException extends ApplicationException {
     /**
      * Returns the error code associated with this exception.
      *
-     * @return the error code {@link ErrorCode#INVALID_REQUEST_EXCEPTION}.
+     * @return the error code {@link ErrorCodeEnum#INVALID_REQUEST_EXCEPTION}.
      */
     @Override
     public ErrorCode getErrorCode() {
-        return ErrorCode.INVALID_REQUEST_EXCEPTION;
+        return ErrorCodeEnum.INVALID_REQUEST_EXCEPTION;
     }
 
 }

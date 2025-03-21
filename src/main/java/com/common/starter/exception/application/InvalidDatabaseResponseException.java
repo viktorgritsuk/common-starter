@@ -2,6 +2,7 @@ package com.common.starter.exception.application;
 
 
 import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
 
 /**
  * Represents an exception that occurs when there is an invalid response from Database.
@@ -15,7 +16,7 @@ public class InvalidDatabaseResponseException extends ApplicationException {
      */
     @Override
     public ErrorCode getErrorCode() {
-        return ErrorCode.INVALID_DATABASE_RESPONSE_EXCEPTION;
+        return ErrorCodeEnum.INVALID_DATABASE_RESPONSE_EXCEPTION;
     }
 
 }

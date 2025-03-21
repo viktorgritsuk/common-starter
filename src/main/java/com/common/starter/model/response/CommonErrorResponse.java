@@ -1,7 +1,6 @@
 package com.common.starter.model.response;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.StringJoiner;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -11,20 +10,18 @@ import lombok.Builder;
 
 @Builder
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-public record ErrorResponse(
+public record CommonErrorResponse(
 
-    Integer code,
-    String message,
-    List<CommonErrorResponse> errors
+    String code,
+    String message
 
 ) implements Serializable {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", ErrorResponse.class.getSimpleName() + "[", "]")
-            .add("code=" + code)
+        return new StringJoiner(", ", CommonErrorResponse.class.getSimpleName() + "[", "]")
+            .add("code='" + code + "'")
             .add("message='" + message + "'")
-            .add("errors=" + errors)
             .toString();
     }
 

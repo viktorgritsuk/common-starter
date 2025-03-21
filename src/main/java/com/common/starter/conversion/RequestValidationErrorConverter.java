@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
-import com.common.starter.model.domain.CommonError;
-import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
+import com.common.starter.model.response.CommonErrorResponse;
 
 import jakarta.validation.ConstraintViolation;
 
@@ -24,14 +24,14 @@ public class RequestValidationErrorConverter {
      * @param constraintViolation The ConstraintViolation instance to be converted.
      * @return The converted Error instance.
      */
-    public CommonError convert(final ConstraintViolation<?> constraintViolation) {
+    public CommonErrorResponse convert(final ConstraintViolation<?> constraintViolation) {
         String excMessage = constraintViolation.getMessage();
         String fieldName = ((PathImpl) constraintViolation.getPropertyPath()).getLeafNode().getName();
 
         String errorMessage = fieldName + ": " + excMessage;
 
-        return CommonError.builder()
-            .code(ErrorCode.INVALID_REQUEST_EXCEPTION.getCode())
+        return CommonErrorResponse.builder()
+            .code(ErrorCodeEnum.INVALID_REQUEST_EXCEPTION.getCode())
             .message(errorMessage)
             .build();
     }
@@ -42,18 +42,18 @@ public class RequestValidationErrorConverter {
      * @param error The MismatchedInputException instance to be converted.
      * @return The converted Error instance.
      */
-    public CommonError convert(final ObjectError error) {
+    public CommonErrorResponse convert(final ObjectError error) {
         if (error instanceof FieldError fieldError) {
             String fieldName = capitalizeEachJsonFieldName(fieldError.getField());
 
-            return CommonError.builder()
-                .code(ErrorCode.INVALID_REQUEST_EXCEPTION.getCode())
+            return CommonErrorResponse.builder()
+                .code(ErrorCodeEnum.INVALID_REQUEST_EXCEPTION.getCode())
                 .message(fieldName + ": " + fieldError.getDefaultMessage())
                 .build();
         }
         else {
-            return CommonError.builder()
-                .code(ErrorCode.INVALID_REQUEST_EXCEPTION.getCode())
+            return CommonErrorResponse.builder()
+                .code(ErrorCodeEnum.INVALID_REQUEST_EXCEPTION.getCode())
                 .message(error.getDefaultMessage())
                 .build();
         }

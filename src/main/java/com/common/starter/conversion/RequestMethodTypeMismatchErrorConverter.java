@@ -3,8 +3,8 @@ package com.common.starter.conversion;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import com.common.starter.model.domain.CommonError;
-import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
+import com.common.starter.model.response.CommonErrorResponse;
 
 @Component
 public class RequestMethodTypeMismatchErrorConverter {
@@ -15,11 +15,11 @@ public class RequestMethodTypeMismatchErrorConverter {
      * @param source MethodArgumentTypeMismatchException instance
      * @return Error object
      */
-    public CommonError convert(MethodArgumentTypeMismatchException source) {
+    public CommonErrorResponse convert(MethodArgumentTypeMismatchException source) {
         final String fieldName = source.getPropertyName();
 
-        return CommonError.builder()
-            .code(ErrorCode.INVALID_REQUEST_EXCEPTION.getCode())
+        return CommonErrorResponse.builder()
+            .code(ErrorCodeEnum.INVALID_REQUEST_EXCEPTION.getCode())
             .message(fieldName + " value is incorrect")
             .build();
     }

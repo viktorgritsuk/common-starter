@@ -2,18 +2,19 @@ package com.common.starter.exception.application;
 
 
 import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
 
 /**
  * Exception thrown when there is an error with the database connection.
  */
-public class SqlConnectionException extends ApplicationException {
+public class DbConnectionException extends ApplicationException {
 
     /**
      * Constructs a new SqlConnectionException with the specified detail message.
      *
      * @param message the detail message (which is saved for later retrieval by the getMessage() method).
      */
-    public SqlConnectionException(String message) {
+    public DbConnectionException(String message) {
         super(message);
     }
 
@@ -25,7 +26,7 @@ public class SqlConnectionException extends ApplicationException {
      */
     @Override
     public ErrorCode getErrorCode() {
-        return ErrorCode.SQL_CONNECTION_EXCEPTION;
+        return ErrorCodeEnum.DB_CONNECTION_EXCEPTION;
     }
 }
 

@@ -2,6 +2,7 @@ package com.common.starter.exception.application;
 
 
 import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
 
 /**
  * Represents an exception that occurs when there is an invalid response from FlexCube.
@@ -15,6 +16,6 @@ public class InvalidResponseException extends ApplicationException {
      */
     @Override
     public ErrorCode getErrorCode() {
-        return ErrorCode.INVALID_RESPONSE_EXCEPTION;
+        return ErrorCodeEnum.INVALID_RESPONSE_EXCEPTION;
     }
 }

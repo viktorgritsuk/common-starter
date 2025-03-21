@@ -2,6 +2,7 @@ package com.common.starter.exception.application;
 
 
 import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
 
 /**
  * Exception thrown when an error occurs during serialization.
@@ -24,6 +25,6 @@ public class SerializingException extends ApplicationException {
      */
     @Override
     public ErrorCode getErrorCode() {
-        return ErrorCode.SERIALIZING_EXCEPTION;
+        return ErrorCodeEnum.SERIALIZING_EXCEPTION;
     }
 }

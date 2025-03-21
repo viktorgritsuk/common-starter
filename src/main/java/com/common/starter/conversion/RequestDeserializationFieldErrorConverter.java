@@ -4,8 +4,8 @@ import java.util.StringJoiner;
 
 import org.springframework.stereotype.Component;
 
-import com.common.starter.model.domain.CommonError;
-import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
+import com.common.starter.model.response.CommonErrorResponse;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
 /**
@@ -21,11 +21,11 @@ public class RequestDeserializationFieldErrorConverter {
      * @param exc The MismatchedInputException instance to be converted.
      * @return The converted Error instance.
      */
-    public CommonError convert(MismatchedInputException exc) {
+    public CommonErrorResponse convert(MismatchedInputException exc) {
         String fieldName = getFullFieldName(exc);
 
-        return CommonError.builder()
-            .code(ErrorCode.INVALID_REQUEST_EXCEPTION.getCode())
+        return CommonErrorResponse.builder()
+            .code(ErrorCodeEnum.INVALID_REQUEST_EXCEPTION.getCode())
             .message(fieldName + " value is incorrect")
             .build();
     }

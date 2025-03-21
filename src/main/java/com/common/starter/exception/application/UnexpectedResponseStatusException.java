@@ -2,6 +2,7 @@ package com.common.starter.exception.application;
 
 
 import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
 
 /**
  * This class represents an exception that is thrown when an unexpected response status is encountered.
@@ -17,7 +18,7 @@ public class UnexpectedResponseStatusException extends ApplicationException {
      */
     @Override
     public ErrorCode getErrorCode() {
-        return ErrorCode.UNEXPECTED_RESPONSE_STATUS;
+        return ErrorCodeEnum.UNEXPECTED_RESPONSE_STATUS;
     }
 
 }

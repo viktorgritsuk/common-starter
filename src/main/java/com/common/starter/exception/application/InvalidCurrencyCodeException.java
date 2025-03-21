@@ -2,6 +2,7 @@ package com.common.starter.exception.application;
 
 
 import com.common.starter.model.enums.ErrorCode;
+import com.common.starter.model.enums.ErrorCodeEnum;
 
 /**
  * Exception thrown when an invalid currency code is encountered.
@@ -24,6 +25,6 @@ public class InvalidCurrencyCodeException extends ApplicationException {
      */
     @Override
     public ErrorCode getErrorCode() {
-        return ErrorCode.INVALID_CURRENCY_CODE_EXCEPTION;
+        return ErrorCodeEnum.INVALID_CURRENCY_CODE_EXCEPTION;
     }
 }

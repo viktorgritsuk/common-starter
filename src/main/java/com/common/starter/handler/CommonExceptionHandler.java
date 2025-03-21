@@ -7,11 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.common.starter.exception.external.ExternalErrorException;
-import com.common.starter.exception.external.client.ClientExternalErrorException;
-import com.common.starter.model.domain.CommonError;
+import com.common.starter.model.response.CommonErrorResponse;
 import com.common.starter.model.response.ErrorResponse;
 import com.common.starter.util.CommonResponseBuilder;
 import com.common.starter.util.ExceptionHandlerUtils;
@@ -27,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Order
 @Slf4j
 @RequiredArgsConstructor
-public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
+public class CommonExceptionHandler {
 
     /**
      * Handles and converts exceptions to errors.
@@ -47,12 +45,14 @@ public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
      * @throws IllegalArgumentException if the com.bae.ii.exception parameter is null.
      */
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<Object> handleException(Exception exception) {
+    public final ResponseEntity<Object> handleInternalErrorException(final Exception exception) {
         log.error(exception.getMessage(), exception);
+
+        List<CommonErrorResponse> errorsList = exceptionHandlerUtils.getInternalErrors(exception);
 
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(commonResponseBuilder.generateErrorResponse(exceptionHandlerUtils.getErrors(exception)));
+            .body(commonResponseBuilder.generateErrorResponse(errorsList));
     }
 
     /**
@@ -63,13 +63,10 @@ public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
      * @throws IllegalArgumentException if the exception parameter is null.
      */
     @ExceptionHandler(ExternalErrorException.class)
-    public final ResponseEntity<ErrorResponse> handleExternalErrorException(ExternalErrorException exception) {
+    public final ResponseEntity<ErrorResponse> handleExternalErrorException(final ExternalErrorException exception) {
         log.error(exception.getMessage(), exception);
 
-        List<CommonError> errorList = switch (exception) {
-            case ClientExternalErrorException e -> exceptionHandlerUtils.getClientErrors(e);
-            default -> exception.getErrors();
-        };
+        List<CommonErrorResponse> errorList = exceptionHandlerUtils.getExternalErrors(exception);
 
         return ResponseEntity
             .status(exception.getStatus())
@@ -84,12 +81,14 @@ public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
      * @throws IllegalArgumentException if the com.bae.ii.exception parameter is null.
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public final ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException exception) {
+    public final ResponseEntity<Object> handleBadRequestException(final ConstraintViolationException exception) {
         log.error(exception.getMessage(), exception);
+
+        List<CommonErrorResponse> errorList = exceptionHandlerUtils.getConstraintViolationsErrors(exception);
 
         return ResponseEntity
             .badRequest()
-            .body(commonResponseBuilder.generateErrorResponse(exceptionHandlerUtils.getErrors(exception)));
+            .body(commonResponseBuilder.generateErrorResponse(errorList));
     }
 
 }
