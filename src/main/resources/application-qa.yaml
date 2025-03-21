@@ -80,3 +80,7 @@ logging:
             health:
               HealthEndpointSupport: ERROR
     root: ${LOGGING_LEVEL}
+
+required-environment-variables:
+  SERVER_PORT,
+  LOGGING_LEVEL

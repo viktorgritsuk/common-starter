@@ -70,3 +70,7 @@ logging:
     file: log.log
   level:
     root: DEBUG
+
+required-environment-variables:
+  SERVER_PORT,
+  LOGGING_LEVEL
