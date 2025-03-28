@@ -9,11 +9,11 @@ public enum FunctionResponseHeaderStatus {
      * Success db response status.
      */
     SUCCESS,
+
     /**
      * Failed db response status.
      */
     FAILURE;
-
 
     public boolean isSucceed() {
         return this.equals(SUCCESS);

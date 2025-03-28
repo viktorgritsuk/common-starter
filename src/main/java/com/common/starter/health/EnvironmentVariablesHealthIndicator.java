@@ -48,7 +48,7 @@ public class EnvironmentVariablesHealthIndicator implements HealthIndicator {
      * It is defined in the {@code EnvironmentVariablesHealthIndicator} class and used in the {@code isEnvironmentVariablesDefined} method
      * to check if these variables are defined by checking their corresponding system properties.
      */
-    @Value("${required-environment-variables}")
+    @Value("${management.endpoint.health.required-environment-variables}")
     private List<String> environmentVariables;
 
     @Override
@@ -74,8 +74,8 @@ public class EnvironmentVariablesHealthIndicator implements HealthIndicator {
 
         environmentVariables
             .forEach(environmentVariable -> {
-                String getenv = System.getenv(environmentVariable);
-                if (getenv == null) {
+                String getEnv = System.getenv(environmentVariable);
+                if (getEnv == null) {
                     undefinedVariables.add(environmentVariable);
                 }
             });

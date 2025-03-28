@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 import com.common.starter.model.response.CommonErrorResponse;
 import com.common.starter.model.response.ErrorResponse;
 import com.common.starter.model.response.SuccessResponse;
-import static com.common.starter.util.CommonResponseConstants.ERRORED_RESPONSE_CODE;
-import static com.common.starter.util.CommonResponseConstants.ERRORED_RESPONSE_MESSAGE;
+import static com.common.starter.util.CommonResponseConstants.ERROR_RESPONSE_CODE;
+import static com.common.starter.util.CommonResponseConstants.ERROR_RESPONSE_MESSAGE;
 import static com.common.starter.util.CommonResponseConstants.SUCCEED_RESPONSE_CODE;
 import static com.common.starter.util.CommonResponseConstants.SUCCEED_RESPONSE_MESSAGE;
 
@@ -23,8 +23,8 @@ public class CommonResponseBuilder {
      */
     public ErrorResponse generateErrorResponse(List<CommonErrorResponse> errors) {
         return ErrorResponse.builder()
-            .code(ERRORED_RESPONSE_CODE)
-            .message(ERRORED_RESPONSE_MESSAGE)
+            .code(ERROR_RESPONSE_CODE)
+            .message(ERROR_RESPONSE_MESSAGE)
             .errors(errors)
             .build();
     }

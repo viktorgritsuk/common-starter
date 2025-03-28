@@ -1,0 +1,9 @@
+{
+    "properties": [
+        {
+            "name": "management.endpoint.health.required-environment-variables",
+            "type": "java.util.List<java.lang.String>",
+            "description": "List of required environment variables for health check environment variables."
+        }
+    ]
+}

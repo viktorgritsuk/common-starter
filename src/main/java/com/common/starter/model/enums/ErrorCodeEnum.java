@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCodeEnum implements ErrorCode {
+
     /**
      * Represents the internal server error.
      */
@@ -89,7 +90,7 @@ public enum ErrorCodeEnum implements ErrorCode {
     SWITCH_CONNECTION_EXCEPTION("12", "Connection to SWITCH was refused"),
 
     /**
-     * Represents an error code for a encryption process errors.
+     * Represents an error code for an encryption process errors.
      * <p>
      * The value of this variable is "13" and it corresponds to the message "Encryption failed".
      */
@@ -116,6 +117,7 @@ public enum ErrorCodeEnum implements ErrorCode {
      * It is used to identify different error conditions.
      */
     private final String code;
+
     /**
      * Represents the message associated with an error code.
      * <p>

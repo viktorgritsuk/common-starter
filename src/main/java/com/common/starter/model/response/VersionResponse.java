@@ -11,9 +11,7 @@ import lombok.Builder;
 @Builder
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 public record VersionResponse(
-
     String appVersion
-
 ) implements Serializable {
 
     @Override

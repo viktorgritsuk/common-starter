@@ -45,7 +45,6 @@ public class DBResponseValidator {
                     .map(functionResponseToCommonErrorConverter::convert)
                     .toList());
         }
-
     }
 
 }

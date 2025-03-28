@@ -9,8 +9,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import static com.common.starter.util.DateTimeConstants.FLEX_CUBE_DATE_TIME_FORMAT;
-import static com.common.starter.util.DateTimeConstants.FLEX_CUBE_DATE_TIME_WITHOUT_SECONDS_FORMAT;
+import static com.common.starter.util.DateTimeConstants.DATE_TIME_FORMAT;
+import static com.common.starter.util.DateTimeConstants.DATE_TIME_WITHOUT_SECONDS_FORMAT;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +34,8 @@ public final class DateUtils {
         if (calendar == null) {
             return null;
         }
-        return LocalDate.of(
-            calendar.getYear(),
-            calendar.getMonth(),
-            calendar.getDay());
+
+        return LocalDate.of(calendar.getYear(), calendar.getMonth(), calendar.getDay());
     }
 
     /**
@@ -67,13 +65,14 @@ public final class DateUtils {
      * @return The converted LocalDateTime object
      */
     public static LocalDateTime convertToLocalDateTime(final String timestamp) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FLEX_CUBE_DATE_TIME_FORMAT);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+
         try {
             return LocalDateTime.parse(timestamp, dateTimeFormatter);
         }
         catch (DateTimeParseException exc1) {
             try {
-                dateTimeFormatter = DateTimeFormatter.ofPattern(FLEX_CUBE_DATE_TIME_WITHOUT_SECONDS_FORMAT);
+                dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_WITHOUT_SECONDS_FORMAT);
                 return LocalDateTime.parse(timestamp, dateTimeFormatter);
             }
             catch (DateTimeParseException exc2) {

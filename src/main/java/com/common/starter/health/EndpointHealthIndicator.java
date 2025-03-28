@@ -45,7 +45,12 @@ public class EndpointHealthIndicator implements HealthIndicator {
      * @param endpointUnavailableMessage endpoint with unavailable status message
      * @param connectionErrorMessage endpoint with unavailable log message
      */
-    public EndpointHealthIndicator(String url, String endpointAvailableMessage, String endpointUnavailableMessage, String connectionErrorMessage) {
+    public EndpointHealthIndicator(
+        String url,
+        String endpointAvailableMessage,
+        String endpointUnavailableMessage,
+        String connectionErrorMessage
+    ) {
         this.url = url;
         this.endpointAvailableMessage = endpointAvailableMessage;
         this.endpointUnavailableMessage = endpointUnavailableMessage;
@@ -94,4 +99,5 @@ public class EndpointHealthIndicator implements HealthIndicator {
 
         return status;
     }
+
 }

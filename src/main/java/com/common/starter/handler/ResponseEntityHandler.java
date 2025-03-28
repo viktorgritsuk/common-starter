@@ -2,6 +2,7 @@ package com.common.starter.handler;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -55,7 +56,13 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
     private final RequestMethodTypeMismatchErrorConverter methodTypeMismatchErrorConverter;
 
     @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
+    protected ResponseEntity<Object> handleExceptionInternal(
+        @NotNull Exception ex,
+        Object body,
+        @NotNull HttpHeaders headers,
+        @NotNull HttpStatusCode statusCode,
+        @NotNull WebRequest request
+    ) {
         log.error("Internal com.bae.ii.exception in the request: {}", ex.getMessage(), ex);
 
         ErrorResponse errorResponse = commonResponseBuilder.generateErrorResponse(List.of(
@@ -69,7 +76,12 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+        @NotNull MethodArgumentNotValidException ex,
+        @NotNull HttpHeaders headers,
+        @NotNull HttpStatusCode status,
+        @NotNull WebRequest request
+    ) {
         log.error("Method argument com.bae.ii.exception in the request: {}", ex.getMessage(), ex);
 
         List<CommonErrorResponse> errors = ex.getBindingResult().getAllErrors().stream()
@@ -80,7 +92,12 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleNoResourceFoundException(NoResourceFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleNoResourceFoundException(
+        @NotNull NoResourceFoundException ex,
+        @NotNull HttpHeaders headers,
+        @NotNull HttpStatusCode status,
+        @NotNull WebRequest request
+    ) {
         log.error("Exception in the request: {}", ex.getMessage(), ex);
 
         ErrorResponse errorResponse = commonResponseBuilder.generateErrorResponse(List.of(
@@ -94,7 +111,12 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+        @NotNull HttpMessageNotReadableException ex,
+        @NotNull HttpHeaders headers,
+        @NotNull HttpStatusCode status,
+        @NotNull WebRequest request
+    ) {
         log.error("Http message not readable com.bae.ii.exception in the request: {}", ex.getMessage(), ex);
 
         CommonErrorResponse error;
@@ -115,15 +137,19 @@ public class ResponseEntityHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        log.error("handle type mismatch" + ex.getMessage(), ex);
+    protected ResponseEntity<Object> handleTypeMismatch(
+        @NotNull TypeMismatchException ex,
+        @NotNull HttpHeaders headers,
+        @NotNull HttpStatusCode status,
+        @NotNull WebRequest request
+    ) {
+        log.error("handle type mismatch: {}", ex.getMessage(), ex);
 
         ResponseEntity<Object> responseEntity;
 
         if (ex instanceof MethodArgumentTypeMismatchException methodArgumentTypeMismatchException) {
             CommonErrorResponse error = methodTypeMismatchErrorConverter.convert(methodArgumentTypeMismatchException);
             ErrorResponse errorResponse = commonResponseBuilder.generateErrorResponse(List.of(error));
-
             responseEntity = ResponseEntity.badRequest().body(errorResponse);
         }
         else {

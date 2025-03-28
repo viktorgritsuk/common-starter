@@ -26,11 +26,6 @@ public final class ExceptionHandlerUtils {
     private final RequestValidationErrorConverter requestValidationErrorConverter;
 
     /**
-     * CommonErrorToResponseConverter.
-     */
-    private final CommonErrorToResponseConverter commonErrorToResponseConverter;
-
-    /**
      * Returns a list of Error objects based on the provided com.bae.ii.exception.
      * <p>
      * If the com.bae.ii.exception is an ApplicationException, it creates an Error object using the error code and message from the com.bae.ii.exception's ErrorCode. If the com.bae.ii.exception is not an ApplicationException

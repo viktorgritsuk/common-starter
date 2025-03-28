@@ -14,23 +14,23 @@ import org.springframework.http.HttpStatus;
  */
 public final class ConnectionChecker {
 
-    private ConnectionChecker() { }
+    private ConnectionChecker() {
+    }
 
     /**
      * This method checks connection to target service.
      * @param url - URL of the target service
      * @param connectionTimeout - connection timeout. If service doesn't response at this time - service is unavailable
      * @return - true - service available, false - service unavailable
-     * @throws IOException
-     * @throws URISyntaxException
      */
     public static boolean isConnected(String url, int connectionTimeout) throws IOException, URISyntaxException {
         boolean status = false;
-
         URL serviceUrl = new URI(url).toURL();
         HttpURLConnection connection = (HttpURLConnection) serviceUrl.openConnection();
+
         connection.setRequestMethod(HttpMethod.GET.name());
         connection.setConnectTimeout(connectionTimeout);
+
         connection.connect();
 
         if (connection.getResponseCode() == HttpStatus.OK.value()) {

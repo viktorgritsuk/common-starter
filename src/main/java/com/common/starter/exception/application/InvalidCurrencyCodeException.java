@@ -27,4 +27,5 @@ public class InvalidCurrencyCodeException extends ApplicationException {
     public ErrorCode getErrorCode() {
         return ErrorCodeEnum.INVALID_CURRENCY_CODE_EXCEPTION;
     }
+
 }

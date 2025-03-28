@@ -27,4 +27,5 @@ public class SerializingException extends ApplicationException {
     public ErrorCode getErrorCode() {
         return ErrorCodeEnum.SERIALIZING_EXCEPTION;
     }
+
 }

@@ -12,11 +12,9 @@ import lombok.Builder;
 @Builder
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 public record ErrorResponse(
-
     Integer code,
     String message,
     List<CommonErrorResponse> errors
-
 ) implements Serializable {
 
     @Override

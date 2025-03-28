@@ -28,44 +28,31 @@ public class StringToEnumConverterFactory implements ConverterFactory<String, En
         return new DefaultStringToEnumConverter(getEnumType(targetType));
     }
 
-    private static class DefaultStringToEnumConverter<T extends Enum> implements Converter<String, T> {
-
-        /**
-         * Enum type class.
-         */
-        private final Class<T> enumType;
-
-        DefaultStringToEnumConverter(Class<T> enumType) {
-            this.enumType = enumType;
-        }
+    /**
+     * @param enumType Enum type class.
+     */
+    private record DefaultStringToEnumConverter<T extends Enum>(Class<T> enumType) implements Converter<String, T> {
 
         @Override
         @Nullable
         public T convert(String source) {
             if (source.isEmpty()) {
-                // It's an empty enum identifier: reset the enum value to null.
                 return null;
             }
+
             return (T) Enum.valueOf(this.enumType, source.trim());
         }
     }
 
-    private static class ValuedStringToEnumConverter<T extends Enum> implements Converter<String, T> {
-
-        /**
-         * Enum type class.
-         */
-        private final Class<T> enumType;
-
-        ValuedStringToEnumConverter(Class<T> enumType) {
-            this.enumType = enumType;
-        }
+    /**
+     * @param enumType Enum type class.
+     */
+    private record ValuedStringToEnumConverter<T extends Enum>(Class<T> enumType) implements Converter<String, T> {
 
         @Override
         @Nullable
         public T convert(String source) {
             if (source.isEmpty()) {
-                // It's an empty enum identifier: reset the enum value to null.
                 return null;
             }
 
@@ -78,7 +65,6 @@ public class StringToEnumConverterFactory implements ConverterFactory<String, En
             throw new IllegalArgumentException(
                 "No enum constant " + enumType.getCanonicalName() + "." + source);
         }
-
     }
 
     private Class<?> getEnumType(Class<?> targetType) {
@@ -93,4 +79,5 @@ public class StringToEnumConverterFactory implements ConverterFactory<String, En
 
         return enumType;
     }
+
 }

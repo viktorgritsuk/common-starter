@@ -28,5 +28,6 @@ public class DbConnectionException extends ApplicationException {
     public ErrorCode getErrorCode() {
         return ErrorCodeEnum.DB_CONNECTION_EXCEPTION;
     }
+
 }
 

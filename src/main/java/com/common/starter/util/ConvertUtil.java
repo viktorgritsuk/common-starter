@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 public final class ConvertUtil {
 
     private ConvertUtil() {
-
     }
 
     /**

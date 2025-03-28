@@ -10,10 +10,8 @@ import lombok.Builder;
  */
 @Builder
 public record CommonError(
-
     String code,
     String message
-
 ) implements Serializable {
 
     @Override

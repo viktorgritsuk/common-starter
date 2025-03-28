@@ -26,6 +26,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 public class CommonBeanConfig {
 
     /**
+     * Max length of payload.
+     */
+    private static final Integer MAX_PAYLOAD_CHARACTERS = 10000;
+
+    /**
      * Creates configured XmlConversionUtils.
      *
      * @return XmlConversionUtils
@@ -80,11 +85,6 @@ public class CommonBeanConfig {
                 mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             });
     }
-
-    /**
-     * Max length of payload.
-     */
-    private static final Integer MAX_PAYLOAD_CHARACTERS = 10000;
 
     /**
      * Creates and configures a CommonsRequestLoggingFilter bean.

@@ -24,12 +24,12 @@ public final class CommonResponseConstants {
     /**
      * Represents an error code.
      */
-    public static final Integer ERRORED_RESPONSE_CODE = 1;
+    public static final Integer ERROR_RESPONSE_CODE = 1;
 
     /**
      * Represents an error message when an operation fails.
      */
-    public static final String ERRORED_RESPONSE_MESSAGE = "Failure";
+    public static final String ERROR_RESPONSE_MESSAGE = "Failure";
 
 
 }

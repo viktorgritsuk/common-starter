@@ -53,6 +53,9 @@ management:
         liveness:
           include:
             - livenessState
+      required-environment-variables:
+        SERVER_PORT,
+        LOGGING_LEVEL
   tracing:
     sampling:
       probability: 1.0
@@ -70,7 +73,3 @@ logging:
     file: log.log
   level:
     root: DEBUG
-
-required-environment-variables:
-  SERVER_PORT,
-  LOGGING_LEVEL

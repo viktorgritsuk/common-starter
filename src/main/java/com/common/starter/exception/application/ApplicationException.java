@@ -27,4 +27,5 @@ public abstract class ApplicationException extends RuntimeException {
      * @return The ErrorCode representing the error code of the exception.
      */
     public abstract ErrorCode getErrorCode();
+
 }

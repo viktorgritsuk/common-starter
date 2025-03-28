@@ -11,10 +11,8 @@ import lombok.Builder;
 @Builder
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 public record SuccessResponse(
-
     Integer code,
     String message
-
 ) implements Serializable {
 
     @Override

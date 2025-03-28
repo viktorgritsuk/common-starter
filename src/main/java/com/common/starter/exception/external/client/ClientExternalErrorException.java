@@ -18,13 +18,15 @@ public class ClientExternalErrorException extends ExternalErrorException {
      */
     private final transient ExternalSystem externalSystem;
 
-    public ClientExternalErrorException(final List<CommonError> errors, ExternalSystem externalSystem) {
+    public ClientExternalErrorException(final List<CommonError> errors, final ExternalSystem externalSystem) {
         super(HttpStatus.CONFLICT, errors);
+
         this.externalSystem = externalSystem;
     }
 
-    public ClientExternalErrorException(final CommonError error, ExternalSystem externalSystem) {
+    public ClientExternalErrorException(final CommonError error, final ExternalSystem externalSystem) {
         super(HttpStatus.CONFLICT, error);
+
         this.externalSystem = externalSystem;
     }
 

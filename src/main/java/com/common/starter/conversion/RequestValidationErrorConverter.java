@@ -27,7 +27,6 @@ public class RequestValidationErrorConverter {
     public CommonErrorResponse convert(final ConstraintViolation<?> constraintViolation) {
         String excMessage = constraintViolation.getMessage();
         String fieldName = ((PathImpl) constraintViolation.getPropertyPath()).getLeafNode().getName();
-
         String errorMessage = fieldName + ": " + excMessage;
 
         return CommonErrorResponse.builder()
@@ -71,11 +70,11 @@ public class RequestValidationErrorConverter {
         }
 
         char[] chars = fieldName.toCharArray();
-        if (chars.length > 0) {
-            chars[0] = Character.toUpperCase(chars[0]);
-        }
+
+        chars[0] = Character.toUpperCase(chars[0]);
 
         boolean dotFound = false;
+
         for (int i = 1; i < chars.length; i++) {
             if (chars[i] == '.') {
                 dotFound = true;
@@ -87,7 +86,6 @@ public class RequestValidationErrorConverter {
         }
 
         return String.valueOf(chars);
-
     }
 
 }

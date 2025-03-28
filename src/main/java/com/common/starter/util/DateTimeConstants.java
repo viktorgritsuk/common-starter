@@ -10,16 +10,16 @@ public class DateTimeConstants {
     /**
      * Default date format for flex cube answer.
      */
-    public static final String FLEX_CUBE_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * Date format without seconds for flex cube answer.
      */
-    public static final String FLEX_CUBE_DATE_TIME_WITHOUT_SECONDS_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final String DATE_TIME_WITHOUT_SECONDS_FORMAT = "yyyy-MM-dd HH:mm";
 
     /**
      * Date format for service request json date values.
      */
-    public static final String REQUEST_JSON_FORMAT_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
 
 }

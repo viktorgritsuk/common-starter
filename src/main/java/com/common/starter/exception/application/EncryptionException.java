@@ -5,7 +5,6 @@ import com.common.starter.model.enums.ErrorCodeEnum;
 
 public class EncryptionException extends ApplicationException {
 
-
     /**
      * Create exception object.
      * @param message error message

@@ -30,5 +30,6 @@ public class SwitchFailedResponseException extends ClientExternalErrorException 
     public SwitchFailedResponseException(final CommonError error) {
         super(error, ExternalSystemEnum.SWITCH);
     }
+
 }
 

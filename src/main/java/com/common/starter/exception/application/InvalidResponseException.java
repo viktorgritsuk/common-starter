@@ -18,4 +18,5 @@ public class InvalidResponseException extends ApplicationException {
     public ErrorCode getErrorCode() {
         return ErrorCodeEnum.INVALID_RESPONSE_EXCEPTION;
     }
+
 }

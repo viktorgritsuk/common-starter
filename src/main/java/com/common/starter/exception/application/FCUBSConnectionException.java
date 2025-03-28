@@ -18,4 +18,5 @@ public class FCUBSConnectionException extends ApplicationException {
     public ErrorCode getErrorCode() {
         return ErrorCodeEnum.FLEX_CUBE_CONNECTION_EXCEPTION;
     }
+
 }

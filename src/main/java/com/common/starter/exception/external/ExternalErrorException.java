@@ -30,18 +30,12 @@ public class ExternalErrorException extends RuntimeException {
      */
     private final List<CommonError> errors;
 
-    public ExternalErrorException(
-        final HttpStatusCode status,
-        final List<CommonError> errors
-    ) {
+    public ExternalErrorException(final HttpStatusCode status, final List<CommonError> errors) {
         this.status = status;
         this.errors = errors;
     }
 
-    public ExternalErrorException(
-        final HttpStatusCode status,
-        final CommonError error
-    ) {
+    public ExternalErrorException(final HttpStatusCode status, final CommonError error) {
         this(status, List.of(error));
     }
 

@@ -38,6 +38,7 @@ public class RequestDeserializationFieldErrorConverter {
      */
     private String getFullFieldName(MismatchedInputException exc) {
         StringJoiner stringJoiner = new StringJoiner(".");
+
         exc.getPath().forEach(reference -> {
             if (reference.getFieldName() != null) {
                 stringJoiner.add(reference.getFieldName());
