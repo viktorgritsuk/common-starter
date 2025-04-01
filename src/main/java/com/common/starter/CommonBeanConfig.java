@@ -2,23 +2,28 @@ package com.common.starter;
 
 import java.math.BigDecimal;
 
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import com.common.starter.logging.RequestIdFilter;
 import com.common.starter.logging.RequestLoggingFilter;
+import com.common.starter.util.XmlConversionUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.cfg.CoercionAction;
 import com.fasterxml.jackson.databind.cfg.CoercionInputShape;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-@Configuration
-public class BeanConfig {
+@AutoConfiguration
+@ComponentScan
+public class CommonBeanConfig {
 
     /**
      * Max length of payload.
@@ -26,15 +31,30 @@ public class BeanConfig {
     private static final Integer MAX_PAYLOAD_CHARACTERS = 10000;
 
     /**
+     * Creates configured XmlConversionUtils.
+     *
+     * @return XmlConversionUtils
+     */
+    @Bean
+    public XmlConversionUtils xmlConverter() {
+        XmlMapper mapper = new XmlMapper();
+
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.registerModule(new JavaTimeModule());
+
+        return new XmlConversionUtils(mapper);
+    }
+
+    /**
      * This method creates and configures a FilterRegistrationBean for the RequestIdFilter.
      *
      * @return FilterRegistrationBean<RequestIdFilter> - The configured FilterRegistrationBean.
      */
     @Bean
-    public FilterRegistrationBean<RequestIdFilter> requestIdFilterFilter() {
+    public FilterRegistrationBean<RequestIdFilter> requestIdFilterFilter(RequestIdFilter requestIdFilter) {
         FilterRegistrationBean<RequestIdFilter> requestIdFilterBean = new FilterRegistrationBean<>();
 
-        requestIdFilterBean.setFilter(new RequestIdFilter());
+        requestIdFilterBean.setFilter(requestIdFilter);
         requestIdFilterBean.setOrder(2);
 
         return requestIdFilterBean;
@@ -82,6 +102,5 @@ public class BeanConfig {
 
         return filter;
     }
-
 
 }

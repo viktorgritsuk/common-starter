@@ -15,11 +15,16 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Adds uniqiue ID for each request in logs.
+ * Adds unique ID for each request in logs.
  */
 @Component
 @Slf4j
 public class RequestIdFilter extends OncePerRequestFilter {
+
+    /**
+     * MDC request id key.
+     */
+    private static final String REQUEST_ID_KEY = "requestId";
 
     @Override
     protected void doFilterInternal(
@@ -27,11 +32,11 @@ public class RequestIdFilter extends OncePerRequestFilter {
         @NonNull HttpServletResponse response,
         FilterChain filterChain
     ) throws ServletException, IOException {
-        MDC.put("requestId", UUID.randomUUID().toString());
+        MDC.put(REQUEST_ID_KEY, UUID.randomUUID().toString());
 
         filterChain.doFilter(request, response);
 
-        MDC.remove("requestId");
+        MDC.remove(REQUEST_ID_KEY);
     }
 
 }
